@@ -24,8 +24,8 @@ svg = [
     '            </feMerge>',
     '        </filter>',
     '    </defs>',
-    '    <!-- Title of the diagram -->',
-    f'    <text x="{width/2}" y="30" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Runway Headings</text>',
+    # '    <!-- Title of the diagram -->',
+    # f'    <text x="{width/2}" y="30" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Runway Headings</text>',
     '    <!-- Background circle with gradient -->',
     f'    <circle cx="{width/2}" cy="{height/2}" r="180" fill="url(#backgroundGradient)" filter="url(#dropShadow)" />',
 ]
@@ -169,7 +169,7 @@ svg.extend([
 ])
 
 # Write to file
-with open('runway_headings_enhanced.svg', 'w') as f:
+with open('runway_headings.svg', 'w') as f:
     f.write('\n'.join(svg))
 
-print("SVG file 'runway_headings_enhanced.svg' has been generated.")
+print("SVG file 'runway_headings.svg' has been generated.")

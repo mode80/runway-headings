@@ -19,8 +19,6 @@
             </feMerge>
         </filter>
     </defs>
-    <!-- Title of the diagram -->
-    <text x="250.0" y="30" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Runway Headings</text>
     <!-- Background circle with gradient -->
     <circle cx="250.0" cy="250.0" r="180" fill="url(#backgroundGradient)" filter="url(#dropShadow)" />
     <path d="M 250.0 250.0 L 250.0 70.0 A 180 180 0 0 1 427.26539554219744 281.25667198004743 Z" fill="#E6F2FF" fill-opacity="0.4" />
