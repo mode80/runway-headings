@@ -110,14 +110,6 @@ svg.extend([
 num_headings = 12
 angle_step = 360 / 36  # Still use 36 segments but only mark every 3rd one
 
-# Dictionary to map cardinal directions to headings
-cardinal_directions = {
-    36: "N",
-    9: "E",
-    18: "S",
-    27: "W"
-}
-
 # Generate headings divisible by 3 (36, 33, 30, ..., 6, 3) clockwise, starting with 36 at top
 for i in range(0, 36, 3):
     # Number to display (36, 33, 30, ...)
@@ -146,54 +138,29 @@ for i in range(0, 36, 3):
     tick_inner_y = center_y - tick_inner_radius * math.cos(angle_rad)
     
     # Determine the color based on the actual heading number
-    if 1 <= number <= 10:
+    # Special case for heading 30 - color it green like the "3" group
+    if number == 30:
+        color_key = "3"  # Use green for heading 30
+    elif 1 <= number <= 10:
         color_key = "0"
     elif 11 <= number <= 20:
         color_key = "1"
-    elif 21 <= number <= 30:
+    elif 21 <= number <= 29:  # Now 21-29 instead of 21-30
         color_key = "2"
     else:  # 31-36
         color_key = "3"
     
     color = digit_colors[color_key]["stroke"]
     
-    # Determine if this is a cardinal direction
-    is_cardinal = number in cardinal_directions
-    
-    # Add tick mark - thicker for cardinal directions
-    stroke_width = 3 if is_cardinal else 1.5
+    # Add tick mark
     svg.append(
-        f'        <line x1="{tick_inner_x:.1f}" y1="{tick_inner_y:.1f}" x2="{tick_outer_x:.1f}" y2="{tick_outer_y:.1f}" stroke="{color}" stroke-width="{stroke_width}"/>'
+        f'        <line x1="{tick_inner_x:.1f}" y1="{tick_inner_y:.1f}" x2="{tick_outer_x:.1f}" y2="{tick_outer_y:.1f}" stroke="{color}" stroke-width="1.5"/>'
     )
     
     # Add text element for the heading
     svg.append(
         f'        <text x="{text_x:.1f}" y="{text_y:.1f}" dominant-baseline="middle" fill="{color}" font-size="16">{formatted_heading}</text>'
     )
-    
-    # Check if this is a cardinal direction heading, add the letter
-    if is_cardinal:
-        # Add cardinal direction letter inside the circle
-        cardinal = cardinal_directions[number]
-        cardinal_x = center_x + cardinal_radius * math.sin(angle_rad)
-        cardinal_y = center_y - cardinal_radius * math.cos(angle_rad)
-        svg.append(
-            f'        <text x="{cardinal_x:.1f}" y="{cardinal_y:.1f}" dominant-baseline="middle" font-weight="bold" font-size="22" fill="{color}">{cardinal}</text>'
-        )
-        
-        # Position the airplane between the center and the cardinal label
-        plane_radius = radius - 80  # Place it closer to center than the cardinal labels
-        plane_x = center_x + plane_radius * math.sin(angle_rad)
-        plane_y = center_y - plane_radius * math.cos(angle_rad)
-        
-        # Point the airplane TOWARD the cardinal direction (the pointy part toward the label)
-        # The angle needs to match the position angle to make it point outward
-        plane_rotation = angle_deg
-        
-        # Draw a triangle pointing outward
-        svg.append(
-            f'        <path d="M 0,-8 L -5,4 L 5,4 Z" transform="translate({plane_x:.1f},{plane_y:.1f}) rotate({plane_rotation:.1f})" fill="{color}" opacity="0.8" />'
-        )
 
 # SVG footer
 svg.extend([
