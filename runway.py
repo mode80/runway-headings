@@ -24,8 +24,6 @@ svg = [
     '            </feMerge>',
     '        </filter>',
     '    </defs>',
-    '    <!-- Title of the diagram -->',
-    f'    <text x="{width/2}" y="30" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Runway Headings</text>',
     '    <!-- Background circle with gradient -->',
     f'    <circle cx="{width/2}" cy="{height/2}" r="180" fill="url(#backgroundGradient)" filter="url(#dropShadow)" />',
 ]
@@ -106,60 +104,125 @@ svg.extend([
     '    <g text-anchor="middle" font-family="Arial">'
 ])
 
-# We'll display 12 headings (36, 33, 30, ..., 6, 3)
-num_headings = 12
-angle_step = 360 / 36  # Still use 36 segments but only mark every 3rd one
+# Define positions for arrows in the middle of each region
+arrow_positions = [
+    5,   # Blue region (50 degrees)
+    15,  # Red region (150 degrees)
+    25,  # Brown region (250 degrees)
+    33   # Green region (330 degrees)
+]
 
-# Generate headings divisible by 3 (36, 33, 30, ..., 6, 3) clockwise, starting with 36 at top
-for i in range(0, 36, 3):
-    # Number to display (36, 33, 30, ...)
-    number = 36 - i
-    if number == 0:  # Handle special case for heading 0
-        number = 36
-    
+# Only display specific headings (3, 5, 7, 9, 10, 13, 15, 17, 18, 20, 23, 25, 27, 30, 31, 33, 35, 36)
+specific_headings = [3, 5, 7, 9, 10, 13, 15, 17, 18, 20, 23, 25, 27, 30, 31, 33, 35, 36]
+
+# Headings that should have near-black labels
+dark_labels = [10, 20, 30, 36]
+
+# Headings that should be semi-transparent (50%)
+transparent_labels = [3, 7, 13, 17, 23, 27, 31, 35]
+
+# Headings with transparency of 22 hex (13.3%)
+transparent_22_labels = [9, 18]
+
+# Generate the specific headings we want to display
+for heading in specific_headings:
     # Format the heading with leading zero if needed
-    formatted_heading = f"{number:02d}"  # This adds a leading zero to single digits
+    formatted_heading = f"{heading:02d}"  # This adds a leading zero to single digits
     
-    # Calculate angle in degrees - now clockwise (0° is at top, going clockwise)
-    # To go clockwise, we need to use negative angles from the top position
-    angle_deg = -i * angle_step  # 0 is at top (negative for clockwise)
+    # Calculate angle in degrees - aviation heading to degrees
+    # Heading 36/0 is 0° (North), heading 9 is 90° (East), etc.
+    angle_deg = heading * 10
     
-    # Convert to radians for math functions
-    angle_rad = math.radians(angle_deg)
+    # Convert to SVG coordinate system (0° is East, 90° is South)
+    svg_angle_deg = angle_deg - 90
+    angle_rad = math.radians(svg_angle_deg)
     
     # Calculate position for text (with padding)
-    text_x = center_x + text_radius * math.sin(angle_rad)
-    text_y = center_y - text_radius * math.cos(angle_rad)
+    text_x = center_x + text_radius * math.cos(angle_rad)
+    text_y = center_y + text_radius * math.sin(angle_rad)
     
     # Calculate positions for tick marks
-    tick_outer_x = center_x + radius * math.sin(angle_rad)
-    tick_outer_y = center_y - radius * math.cos(angle_rad)
-    tick_inner_x = center_x + tick_inner_radius * math.sin(angle_rad)
-    tick_inner_y = center_y - tick_inner_radius * math.cos(angle_rad)
+    tick_outer_x = center_x + radius * math.cos(angle_rad)
+    tick_outer_y = center_y + radius * math.sin(angle_rad)
+    tick_inner_x = center_x + tick_inner_radius * math.cos(angle_rad)
+    tick_inner_y = center_y + tick_inner_radius * math.sin(angle_rad)
     
     # Determine the color based on the actual heading number
-    # Special case for heading 30 - color it green like the "3" group
-    if number == 30:
+    if heading in dark_labels:
+        # Use subtle color for specified headings
+        color = "#00000011"
+    elif heading == 30:
         color_key = "3"  # Use green for heading 30
-    elif 1 <= number <= 10:
+    elif 1 <= heading <= 10:
         color_key = "0"
-    elif 11 <= number <= 20:
+    elif 11 <= heading <= 20:
         color_key = "1"
-    elif 21 <= number <= 29:  # Now 21-29 instead of 21-30
+    elif 21 <= heading <= 29:  # 21-29 instead of 21-30
         color_key = "2"
     else:  # 31-36
         color_key = "3"
     
-    color = digit_colors[color_key]["stroke"]
+    # Only set color from digit_colors if we haven't already set it to near-black
+    if heading not in dark_labels:
+        color = digit_colors[color_key]["stroke"]
     
-    # Add tick mark
+    # Determine opacity based on label type
+    if heading in transparent_22_labels:
+        tick_opacity = "0.22"
+        text_opacity = "0.22"
+    elif heading in transparent_labels:
+        tick_opacity = "0.4" 
+        text_opacity = "0.4"
+    else:
+        tick_opacity = "1.0"
+        text_opacity = "1.0"
+    
+    # Add tick mark with appropriate transparency
     svg.append(
-        f'        <line x1="{tick_inner_x:.1f}" y1="{tick_inner_y:.1f}" x2="{tick_outer_x:.1f}" y2="{tick_outer_y:.1f}" stroke="{color}" stroke-width="1.5"/>'
+        f'        <line x1="{tick_inner_x:.1f}" y1="{tick_inner_y:.1f}" x2="{tick_outer_x:.1f}" y2="{tick_outer_y:.1f}" stroke="{color}" stroke-width="1.5" opacity="{tick_opacity}"/>'
     )
     
-    # Add text element for the heading
+    # Add text element for the heading with appropriate transparency
     svg.append(
-        f'        <text x="{text_x:.1f}" y="{text_y:.1f}" dominant-baseline="middle" fill="{color}" font-size="16">{formatted_heading}</text>'
+        f'        <text x="{text_x:.1f}" y="{text_y:.1f}" dominant-baseline="middle" fill="{color}" font-size="16" opacity="{text_opacity}">{formatted_heading}</text>'
+    )
+
+# Add arrows at the centers of each region with colors matching the region's labels
+for i, position in enumerate(arrow_positions):
+    # Calculate the angle for this position - directly convert heading to degrees
+    # In aviation, heading 5 corresponds to 50 degrees, heading 15 to 150 degrees, etc.
+    angle_deg = position * 10
+    
+    # Convert to SVG coordinate system (0° is East, 90° is South)
+    # For this we need to subtract 90 degrees from our aviation angle and convert to radians
+    svg_angle_deg = angle_deg - 90
+    angle_rad = math.radians(svg_angle_deg)
+    
+    # Determine color based on the position index
+    if i == 0:
+        color = digit_colors["0"]["stroke"]  # Blue for 50 degrees (heading 5)
+    elif i == 1:
+        color = digit_colors["1"]["stroke"]  # Red for 150 degrees (heading 15)
+    elif i == 2:
+        color = digit_colors["2"]["stroke"]  # Brown for 250 degrees (heading 25)
+    else:  # i == 3
+        color = digit_colors["3"]["stroke"]  # Green for 330 degrees (heading 33)
+    
+    # Calculate exact position for the arrow using the angle
+    # Use a consistent distance from center for all arrows
+    plane_radius = radius * 0.6  # 60% of the radius gives a good position within each colored region
+    plane_x = center_x + plane_radius * math.cos(angle_rad)
+    plane_y = center_y + plane_radius * math.sin(angle_rad)
+    
+    # Point the arrow outward from the center
+    # For outward pointing: Use the same angle as the position
+    plane_rotation = svg_angle_deg
+    
+    # Draw a triangle pointing outward
+    # Redefine the triangle to point right by default (toward 3 o'clock)
+    # This way when we rotate it by the same angle as its position, it points outward
+    svg.append(
+        f'        <path d="M 10,0 L -5,-6 L -5,6 Z" transform="translate({plane_x:.1f},{plane_y:.1f}) rotate({plane_rotation:.1f})" fill="{color}" opacity="0.9" />'
     )
 
 # SVG footer
