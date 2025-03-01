@@ -23,24 +23,23 @@
     <text x="250.0" y="30" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Runway Headings</text>
     <!-- Background circle with gradient -->
     <circle cx="250.0" cy="250.0" r="180" fill="url(#backgroundGradient)" filter="url(#dropShadow)" />
-    <!-- Quadrant shading -->
-    <path d="M 250.0 250.0 L 250.0 70.0 A 180 180 0 0 1 430.0 250.0 Z" fill="#e8f4f8" fill-opacity="0.4" />
-    <path d="M 250.0 250.0 L 430.0 250.0 A 180 180 0 0 1 250.0 430.0 Z" fill="#f8e8e8" fill-opacity="0.4" />
-    <path d="M 250.0 250.0 L 250.0 430.0 A 180 180 0 0 1 70.0 250.0 Z" fill="#f8f8e8" fill-opacity="0.4" />
-    <path d="M 250.0 250.0 L 70.0 250.0 A 180 180 0 0 1 250.0 70.0 Z" fill="#e8f8e8" fill-opacity="0.4" />
+    <path d="M 250.0 250.0 L 250.0 70.0 A 180 180 0 0 1 427.26539554219744 281.25667198004743 Z" fill="#E6F2FF" fill-opacity="0.4" />
+    <path d="M 250.0 250.0 L 427.26539554219744 281.25667198004743 A 180 180 0 0 1 188.43637420137964 419.1446717414635 Z" fill="#FFE6E6" fill-opacity="0.4" />
+    <path d="M 250.0 250.0 L 188.43637420137964 419.1446717414635 A 180 180 0 0 1 94.11542731880104 160.0 Z" fill="#FFFFCC" fill-opacity="0.4" />
+    <path d="M 250.0 250.0 L 94.11542731880104 160.0 A 180 180 0 0 1 249.99999999999994 70.0 Z" fill="#E6FFE6" fill-opacity="0.4" />
     <!-- Main circle outline -->
     <circle cx="250.0" cy="250.0" r="150" fill="none" stroke="#505050" stroke-width="2"/>
     <!-- Center point dot -->
     <circle cx="250.0" cy="250.0" r="4" fill="#404040"/>
     <g text-anchor="middle" font-family="Arial">
-        <line x1="250.0" y1="106.0" x2="250.0" y2="100.0" stroke="#2c6aa1" stroke-width="3"/>
-        <text x="250.0" y="82.0" dominant-baseline="middle" fill="#2c6aa1" font-size="16">36</text>
-        <text x="250.0" y="125.0" dominant-baseline="middle" font-weight="bold" font-size="22" fill="#2c6aa1">N</text>
-        <path d="M 0,-8 L -5,4 L 5,4 Z" transform="translate(250.0,180.0) rotate(0.0)" fill="#2c6aa1" opacity="0.8" />
+        <line x1="250.0" y1="106.0" x2="250.0" y2="100.0" stroke="#32795f" stroke-width="3"/>
+        <text x="250.0" y="82.0" dominant-baseline="middle" fill="#32795f" font-size="16">36</text>
+        <text x="250.0" y="125.0" dominant-baseline="middle" font-weight="bold" font-size="22" fill="#32795f">N</text>
+        <path d="M 0,-8 L -5,4 L 5,4 Z" transform="translate(250.0,180.0) rotate(0.0)" fill="#32795f" opacity="0.8" />
         <line x1="178.0" y1="125.3" x2="175.0" y2="120.1" stroke="#32795f" stroke-width="1.5"/>
         <text x="166.0" y="104.5" dominant-baseline="middle" fill="#32795f" font-size="16">33</text>
-        <line x1="125.3" y1="178.0" x2="120.1" y2="175.0" stroke="#32795f" stroke-width="1.5"/>
-        <text x="104.5" y="166.0" dominant-baseline="middle" fill="#32795f" font-size="16">30</text>
+        <line x1="125.3" y1="178.0" x2="120.1" y2="175.0" stroke="#a37336" stroke-width="1.5"/>
+        <text x="104.5" y="166.0" dominant-baseline="middle" fill="#a37336" font-size="16">30</text>
         <line x1="106.0" y1="250.0" x2="100.0" y2="250.0" stroke="#a37336" stroke-width="3"/>
         <text x="82.0" y="250.0" dominant-baseline="middle" fill="#a37336" font-size="16">27</text>
         <text x="125.0" y="250.0" dominant-baseline="middle" font-weight="bold" font-size="22" fill="#a37336">W</text>

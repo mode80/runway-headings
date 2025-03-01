@@ -28,24 +28,83 @@ svg = [
     f'    <text x="{width/2}" y="30" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Runway Headings</text>',
     '    <!-- Background circle with gradient -->',
     f'    <circle cx="{width/2}" cy="{height/2}" r="180" fill="url(#backgroundGradient)" filter="url(#dropShadow)" />',
-    '    <!-- Quadrant shading -->',
-    f'    <path d="M {width/2} {height/2} L {width/2} {height/2-180} A 180 180 0 0 1 {width/2+180} {height/2} Z" fill="#e8f4f8" fill-opacity="0.4" />',
-    f'    <path d="M {width/2} {height/2} L {width/2+180} {height/2} A 180 180 0 0 1 {width/2} {height/2+180} Z" fill="#f8e8e8" fill-opacity="0.4" />',
-    f'    <path d="M {width/2} {height/2} L {width/2} {height/2+180} A 180 180 0 0 1 {width/2-180} {height/2} Z" fill="#f8f8e8" fill-opacity="0.4" />',
-    f'    <path d="M {width/2} {height/2} L {width/2-180} {height/2} A 180 180 0 0 1 {width/2} {height/2-180} Z" fill="#e8f8e8" fill-opacity="0.4" />',
-    '    <!-- Main circle outline -->',
-    f'    <circle cx="{width/2}" cy="{height/2}" r="150" fill="none" stroke="#505050" stroke-width="2"/>',
-    '    <!-- Center point dot -->',
-    f'    <circle cx="{width/2}" cy="{height/2}" r="4" fill="#404040"/>',
-    '    <g text-anchor="middle" font-family="Arial">'
 ]
 
 # Center of the circle
 center_x, center_y = width/2, height/2
 radius = 150  # radius of the circle
+outer_radius = 180  # radius of the background shading
 text_radius = radius + 18  # Add padding for text placement
 tick_inner_radius = radius - 6  # Inner point of the tick mark
 cardinal_radius = radius - 25  # Position for cardinal directions inside the circle
+
+# Define colors for each digit range
+digit_colors = {
+    "0": {"fill": "#E6F2FF", "stroke": "#2c6aa1"},  # Light blue for headings 01-10
+    "1": {"fill": "#FFE6E6", "stroke": "#c13f3c"},  # Light red for headings 11-20
+    "2": {"fill": "#FFFFCC", "stroke": "#a37336"},  # Light yellow for headings 21-30
+    "3": {"fill": "#E6FFE6", "stroke": "#32795f"}   # Light green for headings 31-36
+}
+
+# Create the shaded regions for headings
+# In the compass, heading 36=0 degrees (North), and we go clockwise with 10 degrees per heading
+
+# Region 1 (01-10): Blue
+# 0° (North) to 100° (Heading 10)
+start_angle = 0     # North (heading 36/0)
+end_angle = 100     # Heading 10
+x1 = center_x + outer_radius * math.sin(math.radians(start_angle))
+y1 = center_y - outer_radius * math.cos(math.radians(start_angle))
+x2 = center_x + outer_radius * math.sin(math.radians(end_angle))
+y2 = center_y - outer_radius * math.cos(math.radians(end_angle))
+svg.append(
+    f'    <path d="M {center_x} {center_y} L {x1} {y1} A {outer_radius} {outer_radius} 0 0 1 {x2} {y2} Z" fill="{digit_colors["0"]["fill"]}" fill-opacity="0.4" />'
+)
+
+# Region 2 (11-20): Red
+# 100° (Heading 10) to 200° (Heading 20)
+start_angle = 100   # Heading 10
+end_angle = 200     # Heading 20
+x1 = center_x + outer_radius * math.sin(math.radians(start_angle))
+y1 = center_y - outer_radius * math.cos(math.radians(start_angle))
+x2 = center_x + outer_radius * math.sin(math.radians(end_angle))
+y2 = center_y - outer_radius * math.cos(math.radians(end_angle))
+svg.append(
+    f'    <path d="M {center_x} {center_y} L {x1} {y1} A {outer_radius} {outer_radius} 0 0 1 {x2} {y2} Z" fill="{digit_colors["1"]["fill"]}" fill-opacity="0.4" />'
+)
+
+# Region 3 (21-30): Yellow
+# 200° (Heading 20) to 300° (Heading 30)
+start_angle = 200   # Heading 20
+end_angle = 300     # Heading 30
+x1 = center_x + outer_radius * math.sin(math.radians(start_angle))
+y1 = center_y - outer_radius * math.cos(math.radians(start_angle))
+x2 = center_x + outer_radius * math.sin(math.radians(end_angle))
+y2 = center_y - outer_radius * math.cos(math.radians(end_angle))
+svg.append(
+    f'    <path d="M {center_x} {center_y} L {x1} {y1} A {outer_radius} {outer_radius} 0 0 1 {x2} {y2} Z" fill="{digit_colors["2"]["fill"]}" fill-opacity="0.4" />'
+)
+
+# Region 4 (31-36): Green
+# 300° (Heading 30) to 360° (North/Heading 36)
+start_angle = 300   # Heading 30
+end_angle = 360     # North (heading 36/0)
+x1 = center_x + outer_radius * math.sin(math.radians(start_angle))
+y1 = center_y - outer_radius * math.cos(math.radians(start_angle))
+x2 = center_x + outer_radius * math.sin(math.radians(end_angle))
+y2 = center_y - outer_radius * math.cos(math.radians(end_angle))
+svg.append(
+    f'    <path d="M {center_x} {center_y} L {x1} {y1} A {outer_radius} {outer_radius} 0 0 1 {x2} {y2} Z" fill="{digit_colors["3"]["fill"]}" fill-opacity="0.4" />'
+)
+
+# Add additional SVG elements
+svg.extend([
+    '    <!-- Main circle outline -->',
+    f'    <circle cx="{width/2}" cy="{height/2}" r="150" fill="none" stroke="#505050" stroke-width="2"/>',
+    '    <!-- Center point dot -->',
+    f'    <circle cx="{width/2}" cy="{height/2}" r="4" fill="#404040"/>',
+    '    <g text-anchor="middle" font-family="Arial">'
+])
 
 # We'll display 12 headings (36, 33, 30, ..., 6, 3)
 num_headings = 12
@@ -57,14 +116,6 @@ cardinal_directions = {
     9: "E",
     18: "S",
     27: "W"
-}
-
-# Color codes for different quadrants
-quadrant_colors = {
-    "NE": "#2c6aa1",  # Headings 36-09
-    "SE": "#c13f3c",  # Headings 09-18
-    "SW": "#a37336",  # Headings 18-27
-    "NW": "#32795f"   # Headings 27-36
 }
 
 # Generate headings divisible by 3 (36, 33, 30, ..., 6, 3) clockwise, starting with 36 at top
@@ -94,15 +145,17 @@ for i in range(0, 36, 3):
     tick_inner_x = center_x + tick_inner_radius * math.sin(angle_rad)
     tick_inner_y = center_y - tick_inner_radius * math.cos(angle_rad)
     
-    # Determine the color based on quadrant (N-E-S-W divisions)
-    if 0 <= number <= 9 or number == 36:
-        color = quadrant_colors["NE"]
-    elif 9 < number <= 18:
-        color = quadrant_colors["SE"]
-    elif 18 < number <= 27:
-        color = quadrant_colors["SW"]
-    else:  # 27 < number < 36
-        color = quadrant_colors["NW"]
+    # Determine the color based on the actual heading number
+    if 1 <= number <= 10:
+        color_key = "0"
+    elif 11 <= number <= 20:
+        color_key = "1"
+    elif 21 <= number <= 30:
+        color_key = "2"
+    else:  # 31-36
+        color_key = "3"
+    
+    color = digit_colors[color_key]["stroke"]
     
     # Determine if this is a cardinal direction
     is_cardinal = number in cardinal_directions
