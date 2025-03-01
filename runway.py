@@ -112,17 +112,11 @@ arrow_positions = [
     33   # Green region (330 degrees)
 ]
 
-# Only display specific headings (3, 5, 7, 9, 10, 13, 15, 17, 18, 20, 23, 25, 27, 30, 31, 33, 35, 36)
-specific_headings = [3, 5, 7, 9, 10, 13, 15, 17, 18, 20, 23, 25, 27, 30, 31, 33, 35, 36]
-
-# Headings that should have near-black labels
-dark_labels = [10, 20, 30, 36]
+# Only display specific headings (3, 5, 7, 13, 15, 17, 23, 25, 27, 31, 33, 35)
+specific_headings = [3, 5, 7, 13, 15, 17, 23, 25, 27, 31, 33, 35]
 
 # Headings that should be semi-transparent (50%)
 transparent_labels = [3, 7, 13, 17, 23, 27, 31, 35]
-
-# Headings with transparency of 22 hex (13.3%)
-transparent_22_labels = [9, 18]
 
 # Generate the specific headings we want to display
 for heading in specific_headings:
@@ -148,12 +142,7 @@ for heading in specific_headings:
     tick_inner_y = center_y + tick_inner_radius * math.sin(angle_rad)
     
     # Determine the color based on the actual heading number
-    if heading in dark_labels:
-        # Use subtle color for specified headings
-        color = "#00000011"
-    elif heading == 30:
-        color_key = "3"  # Use green for heading 30
-    elif 1 <= heading <= 10:
+    if 1 <= heading <= 10:
         color_key = "0"
     elif 11 <= heading <= 20:
         color_key = "1"
@@ -162,24 +151,14 @@ for heading in specific_headings:
     else:  # 31-36
         color_key = "3"
     
-    # Only set color from digit_colors if we haven't already set it to near-black
-    if heading not in dark_labels:
-        color = digit_colors[color_key]["stroke"]
+    color = digit_colors[color_key]["stroke"]
     
     # Determine opacity based on label type
-    if heading in transparent_22_labels:
-        tick_opacity = "0.22"
-        text_opacity = "0.22"
-    elif heading in transparent_labels:
-        tick_opacity = "0.4" 
-        text_opacity = "0.4"
-    else:
-        tick_opacity = "1.0"
-        text_opacity = "1.0"
+    text_opacity = "0.4" if heading in transparent_labels else "1.0"
     
     # Add tick mark with appropriate transparency
     svg.append(
-        f'        <line x1="{tick_inner_x:.1f}" y1="{tick_inner_y:.1f}" x2="{tick_outer_x:.1f}" y2="{tick_outer_y:.1f}" stroke="{color}" stroke-width="1.5" opacity="{tick_opacity}"/>'
+        f'        <line x1="{tick_inner_x:.1f}" y1="{tick_inner_y:.1f}" x2="{tick_outer_x:.1f}" y2="{tick_outer_y:.1f}" stroke="{color}" stroke-width="1.5" opacity="{text_opacity}"/>'
     )
     
     # Add text element for the heading with appropriate transparency
@@ -232,7 +211,7 @@ svg.extend([
 ])
 
 # Write to file
-with open('runway_headings_enhanced.svg', 'w') as f:
+with open('runway_headings.svg', 'w') as f:
     f.write('\n'.join(svg))
 
-print("SVG file 'runway_headings_enhanced.svg' has been generated.")
+print("SVG file 'runway_heading.svg' has been generated.")
