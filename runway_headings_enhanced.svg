@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Gradient for background shading -->
+        <radialGradient id="backgroundGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+        </radialGradient>
+        <!-- Filter for subtle shadow effect -->
+        <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+            <feOffset dx="1" dy="1" result="offsetblur" />
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.3" />
+            </feComponentTransfer>
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+    <!-- Title of the diagram -->
+    <text x="250.0" y="30" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Runway Headings</text>
+    <!-- Background circle with gradient -->
+    <circle cx="250.0" cy="250.0" r="180" fill="url(#backgroundGradient)" filter="url(#dropShadow)" />
+    <!-- Quadrant shading -->
+    <path d="M 250.0 250.0 L 250.0 70.0 A 180 180 0 0 1 430.0 250.0 Z" fill="#e8f4f8" fill-opacity="0.4" />
+    <path d="M 250.0 250.0 L 430.0 250.0 A 180 180 0 0 1 250.0 430.0 Z" fill="#f8e8e8" fill-opacity="0.4" />
+    <path d="M 250.0 250.0 L 250.0 430.0 A 180 180 0 0 1 70.0 250.0 Z" fill="#f8f8e8" fill-opacity="0.4" />
+    <path d="M 250.0 250.0 L 70.0 250.0 A 180 180 0 0 1 250.0 70.0 Z" fill="#e8f8e8" fill-opacity="0.4" />
+    <!-- Main circle outline -->
+    <circle cx="250.0" cy="250.0" r="150" fill="none" stroke="#505050" stroke-width="2"/>
+    <!-- Center point dot -->
+    <circle cx="250.0" cy="250.0" r="4" fill="#404040"/>
+    <g text-anchor="middle" font-family="Arial">
+        <line x1="250.0" y1="106.0" x2="250.0" y2="100.0" stroke="#2c6aa1" stroke-width="3"/>
+        <text x="250.0" y="82.0" dominant-baseline="middle" fill="#2c6aa1" font-size="16">36</text>
+        <text x="250.0" y="125.0" dominant-baseline="middle" font-weight="bold" font-size="22" fill="#2c6aa1">N</text>
+        <path d="M 0,-8 L -5,4 L 5,4 Z" transform="translate(250.0,180.0) rotate(0.0)" fill="#2c6aa1" opacity="0.8" />
+        <line x1="178.0" y1="125.3" x2="175.0" y2="120.1" stroke="#32795f" stroke-width="1.5"/>
+        <text x="166.0" y="104.5" dominant-baseline="middle" fill="#32795f" font-size="16">33</text>
+        <line x1="125.3" y1="178.0" x2="120.1" y2="175.0" stroke="#32795f" stroke-width="1.5"/>
+        <text x="104.5" y="166.0" dominant-baseline="middle" fill="#32795f" font-size="16">30</text>
+        <line x1="106.0" y1="250.0" x2="100.0" y2="250.0" stroke="#a37336" stroke-width="3"/>
+        <text x="82.0" y="250.0" dominant-baseline="middle" fill="#a37336" font-size="16">27</text>
+        <text x="125.0" y="250.0" dominant-baseline="middle" font-weight="bold" font-size="22" fill="#a37336">W</text>
+        <path d="M 0,-8 L -5,4 L 5,4 Z" transform="translate(180.0,250.0) rotate(-90.0)" fill="#a37336" opacity="0.8" />
+        <line x1="125.3" y1="322.0" x2="120.1" y2="325.0" stroke="#a37336" stroke-width="1.5"/>
+        <text x="104.5" y="334.0" dominant-baseline="middle" fill="#a37336" font-size="16">24</text>
+        <line x1="178.0" y1="374.7" x2="175.0" y2="379.9" stroke="#a37336" stroke-width="1.5"/>
+        <text x="166.0" y="395.5" dominant-baseline="middle" fill="#a37336" font-size="16">21</text>
+        <line x1="250.0" y1="394.0" x2="250.0" y2="400.0" stroke="#c13f3c" stroke-width="3"/>
+        <text x="250.0" y="418.0" dominant-baseline="middle" fill="#c13f3c" font-size="16">18</text>
+        <text x="250.0" y="375.0" dominant-baseline="middle" font-weight="bold" font-size="22" fill="#c13f3c">S</text>
+        <path d="M 0,-8 L -5,4 L 5,4 Z" transform="translate(250.0,320.0) rotate(-180.0)" fill="#c13f3c" opacity="0.8" />
+        <line x1="322.0" y1="374.7" x2="325.0" y2="379.9" stroke="#c13f3c" stroke-width="1.5"/>
+        <text x="334.0" y="395.5" dominant-baseline="middle" fill="#c13f3c" font-size="16">15</text>
+        <line x1="374.7" y1="322.0" x2="379.9" y2="325.0" stroke="#c13f3c" stroke-width="1.5"/>
+        <text x="395.5" y="334.0" dominant-baseline="middle" fill="#c13f3c" font-size="16">12</text>
+        <line x1="394.0" y1="250.0" x2="400.0" y2="250.0" stroke="#2c6aa1" stroke-width="3"/>
+        <text x="418.0" y="250.0" dominant-baseline="middle" fill="#2c6aa1" font-size="16">09</text>
+        <text x="375.0" y="250.0" dominant-baseline="middle" font-weight="bold" font-size="22" fill="#2c6aa1">E</text>
+        <path d="M 0,-8 L -5,4 L 5,4 Z" transform="translate(320.0,250.0) rotate(-270.0)" fill="#2c6aa1" opacity="0.8" />
+        <line x1="374.7" y1="178.0" x2="379.9" y2="175.0" stroke="#2c6aa1" stroke-width="1.5"/>
+        <text x="395.5" y="166.0" dominant-baseline="middle" fill="#2c6aa1" font-size="16">06</text>
+        <line x1="322.0" y1="125.3" x2="325.0" y2="120.1" stroke="#2c6aa1" stroke-width="1.5"/>
+        <text x="334.0" y="104.5" dominant-baseline="middle" fill="#2c6aa1" font-size="16">03</text>
+    </g>
+</svg>
