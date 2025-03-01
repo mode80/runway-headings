@@ -115,7 +115,7 @@ arrow_positions = [
 # Only display specific headings (3, 5, 7, 13, 15, 17, 23, 25, 27, 31, 33, 35)
 specific_headings = [3, 5, 7, 13, 15, 17, 23, 25, 27, 31, 33, 35]
 
-# Headings that should be semi-transparent (50%)
+# Headings that should be semi-transparent 
 transparent_labels = [3, 7, 13, 17, 23, 27, 31, 35]
 
 # Generate the specific headings we want to display
@@ -154,7 +154,7 @@ for heading in specific_headings:
     color = digit_colors[color_key]["stroke"]
     
     # Determine opacity based on label type
-    text_opacity = "0.4" if heading in transparent_labels else "1.0"
+    text_opacity = "0.3" if heading in transparent_labels else "1.0"
     
     # Add tick mark with appropriate transparency
     svg.append(
